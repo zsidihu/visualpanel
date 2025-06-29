@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="robots" content="noindex, nofollow">
+		<title>Youtube embedded miniplayer</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+		<style>
+			* {
+				margin : 0;
+				padding: 0;
+			}
+
+			html, body {
+				overflow: hidden;
+				height: 113px;
+				width: 200px;
+			}
+			
+			#player {
+				height: 113px; 
+				width : 200px;
+			}			
+		</style>
+		<script src="https://www.youtube.com/iframe_api"></script>
+	</head>
+	<body>
+		<div id="player"></div>
+		<script>
+			let YPlayer = null;
+			let videoId = location.hash.slice(1) ?? null;
+
+			window.addEventListener("hashchange", function() {
+				videoId = location.hash.substring(1) ?? null;
+				
+				if(videoId && YPlayer) {
+					YPlayer.loadVideoById(videoId);
+				}
+			});
+			
+			function onStateChange(e) {
+				if(e.data === YT.PlayerState.ENDED) {
+					window.parent.postMessage({ type: "videoEnded", videoId }, "*");
+				}
+			}
+
+			function onYouTubeIframeAPIReady() {
+				if(videoId) {
+					YPlayer = new YT.Player("player", {
+						videoId: videoId,
+						events: { "onStateChange": onStateChange },
+						playerVars: { autoplay: 1, controls: 1, modestbranding: 1, fs: 0, rel: 0 },
+						height: "113",
+						width: "200"
+					});
+				}
+			}
+		</script>
+	</body>
+</html>
+
