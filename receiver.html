@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="robots" content="noindex, nofollow">
+		<title>VisualPanel YouTube Receiver</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="static/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/favicon/favicon-16x16.png">
+		<style>
+			html,
+			body {
+				align-items: center;
+				background: black;
+				display: flex;
+				margin : 0;
+				padding: 0;
+				justify-content: center;
+				overflow: hidden;
+				height: 100%;
+				width : 100%;
+			}
+
+			iframe {
+				border: none;
+				height: 100%;
+				width : 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<iframe id="youtube-player" src="about:blank" allow="autoplay; fullscreen"></iframe>
+		<script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+		<script>
+			const context = cast.framework.CastReceiverContext.getInstance();
+			const player = document.getElementById('youtube-player');
+
+			context.start();
+
+			context.addCustomMessageListener('urn:x-cast:com.example.custom', (event) => {
+				const message = event.data;
+				
+				if(message.type === 'loadVideo' && message.url) {
+					player.src = message.url;
+				}
+			});
+		</script>
+	</body>
+</html>
+
