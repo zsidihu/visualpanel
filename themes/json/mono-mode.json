@@ -1,0 +1,22 @@
+{
+  "theme": {
+    "image": {
+      "--theme-primary-body": "linear-gradient(90deg, #FFFFFF, #F0F0F0)"
+    },
+    "color": {
+      "--theme-primary-body": "#FFFFFF",
+      "--theme-primary-dash": "#0000000D",
+      "--theme-primary-face": "#CCCCCCAA",
+      "--theme-primary-icon": "#000000",
+      "--theme-primary-link": "#555555",
+      "--theme-primary-shot": "#0000000F",
+      "--theme-primary-text": "#000000"
+    },
+    "opacity": {
+      "--theme-primary-dash": 0.05,
+      "--theme-primary-face": 0.66,
+      "--theme-primary-shot": 0.06
+    }
+  }
+}
+
